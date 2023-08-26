@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="border-t border-white/10">
+    <h2 class="px-4 text-5xl font-semibold leading-7 text-white sm:px-6 lg:px-8 py-7">Markets</h2>
+    <header>
+      <div class="grid grid-cols-1 bg-slate-950 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="border-white/5 py-6 px-4 sm:px-6 lg:px-8">
+          <p class="text-sm font-medium leading-6 text-gray-400 text-center">Number of deploys</p>
+          <p class="mt-2 flex items-baseline justify-center gap-x-2">
+            <span class="text-4xl font-semibold tracking-tight text-white">405</span>
+          </p>
+        </div>
+        <div class="border-white/5 py-6 px-4 sm:px-6 lg:px-8 sm:border-l">
+          <p class="text-sm font-medium leading-6 text-gray-400 text-center">Average deploy time</p>
+          <p class="mt-2 flex items-baseline gap-x-2 justify-center">
+            <span class="text-4xl font-semibold tracking-tight text-white">3.65</span>
+            <span class="text-sm text-gray-400">mins</span>
+          </p>
+        </div>
+        <div class="border-white/5 py-6 px-4 sm:px-6 lg:px-8 lg:border-l">
+          <p class="text-sm font-medium leading-6 text-gray-400 text-center">Number of servers</p>
+          <p class="mt-2 flex items-baseline gap-x-2 justify-center">
+            <span class="text-4xl font-semibold tracking-tight text-white">3</span>
+          </p>
+        </div>
+        <div class="border-white/5 py-6 px-4 sm:px-6 lg:px-8 sm:border-l">
+          <p class="text-sm font-medium leading-6 text-gray-400 text-center">Success rate</p>
+          <p class="mt-2 flex items-baseline gap-x-2 justify-center">
+            <span class="text-4xl font-semibold tracking-tight text-white">98.5%</span>
+          </p>
+        </div>
+      </div>
+    </header>
+    <table class="mt-6 w-full whitespace-nowrap text-center">
+      <colgroup>
+        <col class="lg:w-1/12">
+        <col class="w-full sm:w-4/12">
+        <col class="lg:w-1/12">
+        <col class="lg:w-2/12">
+        <col class="lg:w-1/12">
+        <col class="lg:w-1/12">
+        <col class="lg:w-1/12">
+        <col class="lg:w-1/12">
+      </colgroup>
+      <thead class="border-b border-white/10 text-sm leading-6 text-white">
+        <tr class="font-semibold">
+          <th scope="col" class="py-2">ID</th>
+          <th scope="col" class="py-2">Title</th>
+          <th scope="col" class="py-2">Status</th>
+          <th scope="col" class="py-2">Creator</th>
+          <th scope="col" class="py-2">For-Shares</th>
+          <th scope="col" class="py-2">Against-Shares</th>
+          <th scope="col" class="py-2">Probability</th>
+          <th scope="col" class="py-2">Created Time</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-white/5">
+        {% for market in markets %}
+        <tr class="market-row hover:bg-slate-800 hover:cursor-pointer" data-market="{{ market.id }}">
+          <td class="py-4 text-sm text-white md:table-cell"> {{ market.id }}</td>
+          <td class="py-4 truncate text-md font-medium leading-6 text-white"> {{ market.title }}</td>
+          {% if (market.status.name == "OPEN")%}
+            {% set color="yellow" %}
+          {% elif (market.status.name == "RESOLVED")%}
+            {% set color="green" %}
+          {% else %}
+            {% set color="red" %}
+          {% endif %}
+          <td class="py-4 text-sm leading-6">
+            <div class="flex items-center justify-center gap-x-2">
+              <div class="flex-none rounded-full p-1 text-{{color}}-400 bg-{{color}}-400/10">
+                <div class="h-1.5 w-1.5 rounded-full bg-current"></div>
+              </div>
+              <div class="hidden text-white sm:block"> {{ market.status.name|lower }} </div>
+            </div>
+          </td>
+          <td class="py-4">
+            <div class="flex items-center justify-center gap-x-4">
+              <div class="h-8 w-8 rounded-full bg-gray-800 justify-center flex items-center">{{ market.creator.emoji }}</div>
+              <div class="truncate text-sm font-medium leading-6 text-white">{{ market.creator.username }}</div>
+            </div>
+          </td>
+          <td class="py-4 truncate text-sm font-medium leading-6 text-green-500"> {{ market.for_stock }}</td>
+          <td class="py-4 truncate text-sm font-medium leading-6 text-red-500"> {{ market.against_stock }}</td>
+          <td class="py-4 truncate text-sm font-medium leading-6 text-white"> {{ market.probability }}</td>
+          <td class="hidden py-4 text-sm leading-6 text-white sm:table-cell">
+            <time>{{ market.create_time.strftime('%d %b %Y') }}</time>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

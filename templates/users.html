@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="border-t border-white/10 pt-11">
+    <h2 class="px-4 text-base font-semibold leading-7 text-white sm:px-6 lg:px-8">Users</h2>
+    <table class="mt-6 w-full whitespace-nowrap text-left">
+      <colgroup>
+        <col class="lg:w-1/12">
+        <col class="w-full sm:w-2/12">
+        <col class="lg:w-2/12">
+        <col class="lg:w-1/12">
+        <col class="lg:w-1/12">
+        <col class="lg:w-1/12">
+      </colgroup>
+      <thead class="border-b border-white/10 text-sm leading-6 text-white">
+        <tr>
+          <th scope="col" class="hidden py-2 pl-4 pr-8 font-semibold sm:table-cell">ID</th>
+          <th scope="col" class="py-2 pl-4 pr-8 font-semibold sm:pl-6 lg:pl-8">Username</th>
+          <th scope="col" class="hidden py-2 pl-0 pr-8 font-semibold sm:table-cell">Balance</th>
+          <th scope="col" class="hidden py-2 pl-0 pr-8 font-semibold md:table-cell lg:pr-20">Total Predictions</th>
+          <th scope="col" class="hidden py-2 pl-0 pr-8 font-semibold md:table-cell lg:pr-20">Success Rate</th>
+          <th scope="col" class="hidden py-2 pl-0 pr-4 text-right font-semibold sm:table-cell sm:pr-6 lg:pr-8">Deployed at</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-white/5">
+        {% for user in users %}
+        <tr>
+          <td class="hidden py-4 pl-4 pr-8 text-sm leading-6 text-gray-400 md:table-cell lg:pr-20">{{ user.id }}</td>
+          <td class="py-4 pl-4 pr-8 sm:pl-6 lg:pl-8">
+            <div class="flex items-center gap-x-4">
+              <div class="h-8 w-8 rounded-full bg-slate-200 justify-center flex items-center">{{ user.emoji }}</div>
+              <div class="truncate text-sm font-medium leading-6 text-white">{{ user.username }}</div>
+            </div>
+          </td>
+          <td class="py-4 pl-0 pr-4 text-sm leading-6 sm:pr-8 lg:pr-20">
+            <div class="flex items-center justify-end gap-x-2 sm:justify-start">
+              <div class="hidden text-white sm:block">{{ user.balance }}</div>
+            </div>
+          </td>
+          <td class="hidden py-4 pl-0 pr-8 text-sm leading-6 text-gray-400 md:table-cell lg:pr-20">25s</td>
+          <td class="hidden py-4 pl-0 pr-8 text-sm leading-6 text-gray-400 md:table-cell lg:pr-20">25s</td>
+          <td class="hidden py-4 pl-0 pr-4 text-right text-sm leading-6 text-gray-400 sm:table-cell sm:pr-6 lg:pr-8">
+            <time datetime="2023-01-23T11:00">45 minutes ago</time>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

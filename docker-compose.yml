@@ -1,0 +1,18 @@
+version: '3'
+services:
+  xsb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: xsb
+    ports:
+      - 5000:5000
+    environment:
+      - APP_NAME=harneystreetbets
+    restart: always
+    volumes:
+      - ./templates:/xsb/templates
+      - ./static:/xsb/static
+      - ./helpers:/xsb/helpers
+      - ./data:/xsb/data
+      - ./app.py:/xsb/app.py
